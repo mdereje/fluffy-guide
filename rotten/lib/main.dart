@@ -3,7 +3,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rotten/samples/pages/home_page.dart';
+import 'package:rotten/home_page.dart';
 
 void main() {
   runApp(MyApp());
