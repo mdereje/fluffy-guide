@@ -10,6 +10,12 @@ class CalanderHomePage extends StatefulWidget {
 class _CalanderHomePageState extends State<CalanderHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return CalendarDatePicker(
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(Duration(days: 15)),
+        lastDate: DateTime.now().add(Duration(days: 15)),
+        onDateChanged: (date) {
+          print("$date");
+        });
   }
 }
