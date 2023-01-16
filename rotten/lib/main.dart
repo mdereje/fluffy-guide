@@ -3,6 +3,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rotten/common/theme.dart';
 import 'package:rotten/home_page.dart';
 
 void main() {
@@ -17,11 +18,9 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        ),
+        title: 'Rotten',
+        theme: mainTheme,
+        darkTheme: darkTheme,
         home: MyHomePage(),
       ),
     );

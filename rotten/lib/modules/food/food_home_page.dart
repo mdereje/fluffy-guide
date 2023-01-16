@@ -14,15 +14,12 @@ class FoodHomePage extends StatefulWidget {
 class _FoodHomePageState extends State<FoodHomePage> {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-            iconTheme: theme.primaryIconTheme,
-            backgroundColor: theme.backgroundColor,
+            toolbarHeight: 0,
             bottom: TabBar(
-              indicatorColor: Colors.deepOrange,
               tabs: List.generate(
                 navigation.length,
                 (index) => Tab(

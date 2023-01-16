@@ -30,3 +30,6 @@ First pass of application created from the codelabs tutorial [here](https://code
 4. press f5
 5. if it hasn't on its own go to `http://localhost:57748/#/`
 6. press the dart extension on chrome instance
+
+## Some insperations
+- https://user-images.githubusercontent.com/72301141/206417378-9da25e84-bf21-401c-bf23-bce3b352311e.jpg

@@ -10,6 +10,12 @@ class FridgeModule extends StatefulWidget {
 class _FridgeModuleState extends State<FridgeModule> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ExpansionTile(
+      title: Text('ExpansionTile 1'),
+      subtitle: Text('Trailing expansion arrow icon'),
+      children: <Widget>[
+        ListTile(title: Text('This is tile number 1')),
+      ],
+    );
   }
 }
