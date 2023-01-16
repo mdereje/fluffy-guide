@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rotten/common/tab_navigator.dart';
 import 'package:rotten/modules/calander/calander_home_page.dart';
 import 'package:rotten/modules/finance/finance_home_page.dart';
 import 'package:rotten/modules/fitness/fitness_home_page.dart';
@@ -91,21 +92,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-final List<Navigator> navigation = [
-  Navigator(Icon(Icons.home), 'Home', GeneratorPage()),
-  Navigator(Icon(Icons.calendar_view_month), 'Calander', CalanderHomePage()),
-  Navigator(Icon(Icons.money), 'Finance', FinanceHomePage()),
-  Navigator(Icon(Icons.fitness_center), 'Fitness', FitnessHomePage()),
-  Navigator(Icon(Icons.food_bank), 'Food', FoodHomePage()),
-  Navigator(Icon(Icons.pattern), 'Habits', HabitsHomePage()),
-  Navigator(Icon(Icons.piano), 'Hobbies', HobbiesHomePage()),
-  Navigator(Icon(Icons.favorite), 'Favorites', FavoritesPage()),
+final List<TabNavigator> navigation = [
+  TabNavigator(Icon(Icons.home), 'Home', GeneratorPage()),
+  TabNavigator(Icon(Icons.calendar_view_month), 'Calander', CalanderHomePage()),
+  TabNavigator(Icon(Icons.money), 'Finance', FinanceHomePage()),
+  TabNavigator(Icon(Icons.fitness_center), 'Fitness', FitnessHomePage()),
+  TabNavigator(Icon(Icons.food_bank), 'Food', FoodHomePage()),
+  TabNavigator(Icon(Icons.pattern), 'Habits', HabitsHomePage()),
+  TabNavigator(Icon(Icons.piano), 'Hobbies', HobbiesHomePage()),
+  TabNavigator(Icon(Icons.favorite), 'Favorites', FavoritesPage()),
 ];
-
-class Navigator {
-  Icon icon;
-  String label;
-  Widget page;
-
-  Navigator(this.icon, this.label, this.page);
-}
