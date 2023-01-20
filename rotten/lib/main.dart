@@ -2,25 +2,32 @@
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:rotten/common/theme.dart';
+import 'package:rotten/common/dark_theme_provider.dart';
 import 'package:rotten/home_page.dart';
+
+import 'themes/dark_mode_orange.dart';
+import 'themes/pink_blue.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
+
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Rotten',
-        theme: mainTheme,
-        darkTheme: darkTheme,
+        theme: ThemeDecoder.decodeThemeData(bluePinkTheme),
+        darkTheme: ThemeDecoder.decodeThemeData(darkModeOrange),
         home: MyHomePage(),
       ),
     );

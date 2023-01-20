@@ -16,7 +16,9 @@ dependencies:
   provider: ^6.0.0
   syncfusion_flutter_charts: ^20.4.43
   google_fonts: ^3.0.1
+  json_theme: ^4.0.3
   faker_dart: ^0.1.11
+  shared_preferences: ^2.0.17
   
 dev_dependencies:
   flutter_test:
