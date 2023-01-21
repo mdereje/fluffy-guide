@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rotten/common/shared_preferences.dart';
 import 'package:rotten/common/tab_navigator.dart';
+import 'package:rotten/common/theme_mode_provider.dart';
 import 'package:rotten/modules/calander/calander_home_page.dart';
 import 'package:rotten/modules/finance/finance_home_page.dart';
 import 'package:rotten/modules/fitness/fitness_home_page.dart';
@@ -16,6 +18,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
+  ThemeModeProvider currentTheme = ThemeModeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    currentTheme.addListener(() {
+      setState(() {
+        // print("work");
+        // print(currentTheme.getPreferences());
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               SafeArea(
                 child: NavigationRail(
+                  leading: IconButton(
+                      icon: currentTheme.isDark
+                          ? Icon(Icons.nightlight_round)
+                          : Icon(Icons.sunny),
+                      onPressed: (() {
+                        currentTheme.isDark = !currentTheme.isDark;
+                      })),
                   extended: constraints.maxWidth >= 600,
                   destinations: List.generate(
                       navigation.length,

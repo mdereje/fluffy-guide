@@ -4,7 +4,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:rotten/common/dark_theme_provider.dart';
+import 'package:rotten/common/theme_mode_provider.dart';
 import 'package:rotten/home_page.dart';
 
 import 'themes/dark_mode_orange.dart';
@@ -14,13 +14,29 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  ThemeModeProvider currentTheme = ThemeModeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    currentTheme.addListener(() {
+      setState(() {
+        print("work");
+        // print(currentTheme.getPreferences());
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
@@ -28,6 +44,7 @@ class MyApp extends StatelessWidget {
         title: 'Rotten',
         theme: ThemeDecoder.decodeThemeData(bluePinkTheme),
         darkTheme: ThemeDecoder.decodeThemeData(darkModeOrange),
+        themeMode: currentTheme.isDark ? ThemeMode.dark : ThemeMode.light,
         home: MyHomePage(),
       ),
     );
