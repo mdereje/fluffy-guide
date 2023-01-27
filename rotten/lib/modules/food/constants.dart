@@ -12,8 +12,8 @@ final categoriesMap = {
   'Bread & Baked Goods': Category(
       'Bread & Baked Goods', DateTime.now().add(Duration(days: 7)), 2, 7,
       asset: 'assets/images/bread.png'),
-  'Cereal':
-      Category('Cereal', DateTime.now().add(Duration(days: 180)), 10, 180),
+  'Cereal': Category('Cereal', DateTime.now().add(Duration(days: 180)), 10, 180,
+      asset: 'assets/images/snack.png'),
   'Condiments': Category(
       'Condiments', DateTime.now().add(Duration(days: 365)), 10, 365,
       asset: 'assets/images/condiments.png'),
@@ -32,9 +32,10 @@ final categoriesMap = {
   'Milk & Dairy': Category(
       'Milk & Dairy', DateTime.now().add(Duration(days: 7)), 2, 7,
       asset: 'assets/images/milk.png'),
-  'Seafood': Category('Seafood', DateTime.now().add(Duration(days: 3)), 1, 3),
+  'Seafood': Category('Seafood', DateTime.now().add(Duration(days: 3)), 1, 3,
+      asset: 'assets/images/meat.png'),
   'Snacks': Category('Snacks', DateTime.now().add(Duration(days: 30)), 7, 30,
-      asset: 'assets/images/chips.png'),
+      asset: 'assets/images/pickles.png'),
   'Spices': Category(
       'Spices', DateTime.now().add(Duration(days: 1000)), 0, 1000,
       asset: 'assets/images/salt.png'),
