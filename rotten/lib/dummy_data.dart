@@ -24,26 +24,24 @@ List<FridgeItem> generateFridgeItems(int size) {
 }
 
 FridgeItem generateFridgeItem(int i) {
+  final String finalCat = categoriesMap.entries
+      .elementAt(faker.datatype
+          .float(min: 0, max: categoriesMap.length.toDouble() - 1, precision: 1)
+          .toInt())
+      .key;
   return FridgeItem(faker.datatype.string(), faker.datatype.string(),
       faker.commerce.productName(),
       id: i.toString(),
       quantity: faker.datatype.float(min: 1, max: 10, precision: 1).toInt(),
       volume: faker.datatype.float(min: 100, max: 250, precision: 1).toInt(),
       measurmentType: faker.commerce.productAdjective(),
-      category: categoriesMap.entries
-          .elementAt(faker.datatype
-              .float(
-                  min: 0,
-                  max: categoriesMap.length.toDouble() - 1,
-                  precision: 1)
-              .toInt())
-          .key,
+      category: finalCat,
       storeName: faker.company.companyName(),
       price: faker.datatype.float(min: 0, max: 50, precision: 2),
       dateOfPurchase: faker.date.past(DateTime.now(), rangeInYears: 1),
       expiry: faker.date.future(DateTime.now(), rangeInYears: 2),
       lastModifiedAt: faker.date.past(DateTime.now(), rangeInYears: 1),
-      imageUrl: faker.internet.url(),
+      imageUrl: faker.image.unsplash.food(keyword: finalCat),
       categoryChecked: true);
 }
 

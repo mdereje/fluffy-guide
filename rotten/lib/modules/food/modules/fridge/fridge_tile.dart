@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rotten/dummy_data.dart';
 import 'package:rotten/modules/food/models/fridge_item.dart';
 import 'package:rotten/modules/food/modules/fridge/fridge_item.dart';
 

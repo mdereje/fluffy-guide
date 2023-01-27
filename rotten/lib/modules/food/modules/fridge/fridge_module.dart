@@ -27,8 +27,8 @@ class _FridgeModuleState extends State<FridgeModule> {
             title: Text(category.name),
             subtitle: Text(faker.commerce.productDescription()),
             children: List.generate(category.fridgeItems.length, (index) {
-              return Text(category.fridgeItems.elementAt(index).name);
-              // return FridgeItemTile(category.fridgeItems.elementAt(index));
+              // return Text(category.fridgeItems.elementAt(index).name);
+              return FridgeItemTile(category.fridgeItems.elementAt(index));
             }),
           )
         : SizedBox.shrink();
