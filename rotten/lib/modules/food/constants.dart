@@ -1,6 +1,6 @@
 import 'package:rotten/modules/food/models/category.dart';
 
-final categories = {
+final categoriesMap = {
   'Other': Category('Other', DateTime.now().add(Duration(days: 1000)), 0, 1000,
       asset: 'assets/images/toilet-paper.png'),
   'Alcohol': Category(

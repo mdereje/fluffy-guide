@@ -76,9 +76,9 @@ class FridgeItem {
   }
 
   dynamic get(String? propertyName) {
-    var _propertyMap = toJson();
-    if (_propertyMap.containsKey(propertyName)) {
-      return _propertyMap[propertyName!];
+    var propertyMap = toJson();
+    if (propertyMap.containsKey(propertyName)) {
+      return propertyMap[propertyName!];
     } else {
       throw ArgumentError(
           '$propertyName not found as a property in the class FridgeItem');
@@ -86,14 +86,14 @@ class FridgeItem {
   }
 
   List<String> compare(FridgeItem second) {
-    var _propertyMap = toJson();
+    var propertyMap = toJson();
     var diffs = <String>[];
 
-    _propertyMap.keys.forEach((property) {
+    for (var property in propertyMap.keys) {
       if (get(property) != second.get(property)) {
         diffs.add(property);
       }
-    });
+    }
 
     return diffs;
   }

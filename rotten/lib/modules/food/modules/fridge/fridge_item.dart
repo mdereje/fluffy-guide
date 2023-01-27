@@ -3,9 +3,8 @@ import 'package:rotten/modules/food/models/fridge_item.dart';
 
 class FridgeItemView extends StatefulWidget {
   final FridgeItem item;
-  final String fridgeId;
 
-  FridgeItemView(this.item, this.fridgeId, {Key? key}) : super(key: key);
+  FridgeItemView(this.item, {Key? key}) : super(key: key);
 
   @override
   State<FridgeItemView> createState() => _FridgeItemViewState();

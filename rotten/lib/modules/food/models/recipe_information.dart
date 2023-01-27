@@ -20,9 +20,30 @@ class RecipeInformation {
   final List<String>? diets;
   final List<RecipeIngredient>? extendedIngredients;
   final List<Instrcutions>? analyzedInstructions;
-  
+
   //*https://medium.com/flutter-community/parsing-complex-json-in-flutter-747c46655f51 for information on complex json parsing.
-  RecipeInformation({this.id, this.title, this.serving, this.readyInMinutes, this.vegetarian, this.vegan, this.diaryFree, this.veryHealthy, this.cheap, this.veryPopular, this.sustainable, this.weightWatcherSmartPoints, this.creditText, this.sourceName, this.spoonacularSourceUrl, this.pricePerserving, this.sourceUrl, this.summary, this.diets, this.extendedIngredients, this.analyzedInstructions});
+  RecipeInformation(
+      {this.id,
+      this.title,
+      this.serving,
+      this.readyInMinutes,
+      this.vegetarian,
+      this.vegan,
+      this.diaryFree,
+      this.veryHealthy,
+      this.cheap,
+      this.veryPopular,
+      this.sustainable,
+      this.weightWatcherSmartPoints,
+      this.creditText,
+      this.sourceName,
+      this.spoonacularSourceUrl,
+      this.pricePerserving,
+      this.sourceUrl,
+      this.summary,
+      this.diets,
+      this.extendedIngredients,
+      this.analyzedInstructions});
 
   factory RecipeInformation.fromJson(Map<String, dynamic> json) {
     var dietsParsedJson = json['diets'];
@@ -31,8 +52,10 @@ class RecipeInformation {
     var ingredientListJson = json['extendedIngredients'] as List;
     var instrcutionlistJson = json['analyzedInstructions'] as List;
 
-    var ingredientList = ingredientListJson.map((i) => RecipeIngredient.fromJson(i)).toList();
-    var instructionList = instrcutionlistJson.map((i) => Instrcutions.fromJson(i)).toList();
+    var ingredientList =
+        ingredientListJson.map((i) => RecipeIngredient.fromJson(i)).toList();
+    var instructionList =
+        instrcutionlistJson.map((i) => Instrcutions.fromJson(i)).toList();
 
     return RecipeInformation(
       id: json['id'],
@@ -60,7 +83,6 @@ class RecipeInformation {
   }
 }
 
-
 class RecipeIngredient {
   final int? id;
   final String? aisle;
@@ -72,21 +94,29 @@ class RecipeIngredient {
   final String? unitLong;
   bool inFridge;
 
-  RecipeIngredient({this.id, this.aisle, this.name, this.amount, this.unit, this.image, this.unitShort, this.unitLong, this.inFridge = false});
-  
+  RecipeIngredient(
+      {this.id,
+      this.aisle,
+      this.name,
+      this.amount,
+      this.unit,
+      this.image,
+      this.unitShort,
+      this.unitLong,
+      this.inFridge = false});
+
   factory RecipeIngredient.fromJson(Map<String, dynamic> json) {
     var amount = json['amount'];
     double? amountDouble = amount != null ? amount.toDouble() : 0;
     return RecipeIngredient(
-      id: json['id'], 
-      aisle: json['aisle'] , 
-      name: json['name'], 
-      amount: amountDouble, 
-      image: json['image'], 
-      unit: json['unit'], 
-      unitShort: json['unitShort'], 
-      unitLong: json['unitLong']
-    );
+        id: json['id'],
+        aisle: json['aisle'],
+        name: json['name'],
+        amount: amountDouble,
+        image: json['image'],
+        unit: json['unit'],
+        unitShort: json['unitShort'],
+        unitLong: json['unitLong']);
   }
 }
 
@@ -104,7 +134,7 @@ class Instrcutions {
       name: json['name'],
       steps: stepList,
     );
-}
+  }
 }
 
 class InstrucionStep {
@@ -113,11 +143,13 @@ class InstrucionStep {
   final List<RecipeIngredient>? ingredients;
   bool completed;
 
-  InstrucionStep({this.number, this.step, this.ingredients, this.completed = false});
+  InstrucionStep(
+      {this.number, this.step, this.ingredients, this.completed = false});
 
   factory InstrucionStep.fromJson(Map<String, dynamic> json) {
     var ingredientsJson = json['ingredients'] as List;
-    var ingredients = ingredientsJson.map((i) => RecipeIngredient.fromJson(i)).toList();
+    var ingredients =
+        ingredientsJson.map((i) => RecipeIngredient.fromJson(i)).toList();
     return InstrucionStep(
       number: json['number'],
       step: json['step'],
