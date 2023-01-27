@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rotten/common/shared_preferences.dart';
 import 'package:rotten/common/tab_navigator.dart';
 import 'package:rotten/common/theme_mode_provider.dart';
 import 'package:rotten/modules/calander/calander_home_page.dart';
@@ -35,8 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
 
-    // The container for the current page, with its background color
-    // and subtle switching animation.
     var mainArea = ColoredBox(
       color: colorScheme.surfaceVariant,
       child: AnimatedSwitcher(
@@ -58,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // on narrow screens.
           return Column(
             children: [
-              Expanded(child: mainArea),
               SafeArea(
                 child: BottomNavigationBar(
                   items: List.generate(

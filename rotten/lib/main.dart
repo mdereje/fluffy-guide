@@ -28,10 +28,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     currentTheme.addListener(() {
-      setState(() {
-        print("work");
-        // print(currentTheme.getPreferences());
-      });
+      setState(() {});
     });
   }
 

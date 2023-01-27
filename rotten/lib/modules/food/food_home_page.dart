@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rotten/common/tab_navigator.dart';
-import 'package:rotten/modules/food/modules/fridge_module.dart';
+import 'package:rotten/modules/food/modules/fridge/fridge_module.dart';
 import 'package:rotten/modules/food/modules/groceries_module.dart';
 import 'package:rotten/modules/food/modules/recipies_module.dart';
 
@@ -30,6 +30,10 @@ class _FoodHomePageState extends State<FoodHomePage> {
         body: TabBarView(
           children: List.generate(
               navigation.length, (index) => navigation.elementAt(index).page),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => {print("pressed")},
+          child: Icon(Icons.add),
         ),
       ),
     );
