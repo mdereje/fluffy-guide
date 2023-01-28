@@ -10,6 +10,9 @@ import 'package:rotten/home_page.dart';
 import 'themes/dark_mode_orange.dart';
 import 'themes/pink_blue.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() {
   runApp(MyApp());
 }
