@@ -10,6 +10,17 @@ class RecipiesModule extends StatefulWidget {
 class _RecipiesModuleState extends State<RecipiesModule> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        actions: [Icon(Icons.abc), Icon(Icons.stacked_bar_chart)],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("recipies tab pressed");
+        },
+        child: Icon(Icons.search),
+      ),
+      body: Text('Hello'),
+    );
   }
 }

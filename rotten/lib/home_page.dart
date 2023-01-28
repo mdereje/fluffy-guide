@@ -83,7 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           ? Icon(Icons.nightlight_round)
                           : Icon(Icons.sunny),
                       onPressed: (() {
-                        currentTheme.isDark = !currentTheme.isDark;
+                        setState(() {
+                          currentTheme.isDark = !currentTheme.isDark;
+                        });
                       })),
                   extended: constraints.maxWidth >= 600,
                   destinations: List.generate(

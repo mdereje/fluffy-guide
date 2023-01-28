@@ -28,12 +28,9 @@ class _FoodHomePageState extends State<FoodHomePage> {
               ),
             )),
         body: TabBarView(
-          children: List.generate(
-              navigation.length, (index) => navigation.elementAt(index).page),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => {print("pressed")},
-          child: Icon(Icons.add),
+          children: List.generate(navigation.length, (index) {
+            return navigation.elementAt(index).page;
+          }),
         ),
       ),
     );

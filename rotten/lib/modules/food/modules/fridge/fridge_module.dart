@@ -13,10 +13,18 @@ class FridgeModule extends StatefulWidget {
 class _FridgeModuleState extends State<FridgeModule> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: List.generate(categories.length, (index) {
-        return categoryTile(categories.elementAt(index));
-      }),
+    return Scaffold(
+      body: ListView(
+        children: List.generate(categories.length, (index) {
+          return categoryTile(categories.elementAt(index));
+        }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("Fridge add button tab pressed");
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 
