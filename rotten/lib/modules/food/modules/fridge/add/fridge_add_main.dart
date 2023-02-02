@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rotten/modules/food/modules/fridge/add/add_item_form_page.dart';
 
 class FridgeAddMain extends StatelessWidget {
   const FridgeAddMain({Key? key}) : super(key: key);
@@ -36,17 +37,16 @@ class FridgeAddMain extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              TextButton(
-                child: const Text('Add from previous'),
-                onPressed: () {
-                  print("add from previous");
-                },
-              ),
               const SizedBox(width: 8),
               TextButton(
                 child: const Text('Add new'),
                 onPressed: () {
-                  print("add from scratch");
+                  // AddFridgeItemFormPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddFridgeItemFormPage()),
+                  );
                 },
               ),
               const SizedBox(width: 8),
