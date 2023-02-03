@@ -11,15 +11,22 @@ class StepperFormWizard extends StatefulWidget {
 
 class _StepperFormWizardState extends State<StepperFormWizard> {
   // List<String> categories = categoriesMap.keys.toList();
-
   int currentStep = 0;
   String finalForm = '';
+  late FocusNode _focusNode;
 
   final form = FormGroup({
-    'category': FormControl(value: ''),
+    'category': FormControl(validators: [Validators.required]),
     'name': FormControl(validators: [Validators.required]),
-    'expiry': FormControl()
+    'expiry': FormControl<DateTime>(validators: [Validators.required])
   });
+
+  @override
+  void initState() {
+    _focusNode = FocusNode();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -30,14 +37,22 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
             Stepper(
               currentStep: currentStep,
               onStepTapped: (step) => tapped(step),
-              onStepContinue: continued(form),
+              onStepContinue: continued,
               onStepCancel: cancel,
               steps: <Step>[
                 Step(
                   title: Text('Category'),
                   content: ReactiveTextField(
-                    formControlName: 'category',
-                  ),
+                      decoration: InputDecoration(
+                        labelText:
+                            'Select which category of food you think it belongs to?',
+                        suffixIcon: Icon(Icons.category),
+                      ),
+                      formControlName: 'category',
+                      validationMessages: {
+                        ValidationMessage.required: (error) =>
+                            'Select from exising categories.'
+                      }),
                   isActive: currentStep >= 0,
                   state: currentStep >= 0
                       ? StepState.complete
@@ -46,10 +61,14 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
                 Step(
                   title: Text('Item Name'),
                   content: ReactiveTextField(
+                    decoration: InputDecoration(
+                      labelText: 'What would you like to call this item?',
+                      suffixIcon: Icon(Icons.text_fields),
+                    ),
                     formControlName: 'name',
                     validationMessages: {
                       ValidationMessage.required: (error) =>
-                          'Item name is required you fool'
+                          'Must have an item name.'
                     },
                   ),
                   isActive: currentStep >= 0,
@@ -59,9 +78,36 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
                 ),
                 Step(
                   title: Text('Expiry'),
-                  content: ReactiveTextField(
-                    formControlName: 'expiry',
-                  ),
+                  content: Column(children: [
+                    ReactiveDatePicker(
+                      formControlName: 'expiry',
+                      builder: (BuildContext context,
+                          ReactiveDatePickerDelegate<DateTime> picker,
+                          Widget? child) {
+                        return ReactiveTextField(
+                            onTap: (_) {
+                              if (_focusNode.canRequestFocus) {
+                                _focusNode.unfocus();
+                                picker.showPicker();
+                              }
+                            },
+                            valueAccessor: DateTimeValueAccessor(),
+                            focusNode: _focusNode,
+                            formControlName: 'expiry',
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'When do you guess it will expire?',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
+                            validationMessages: {
+                              ValidationMessage.required: (error) =>
+                                  'Must pick a date to get notified about when it will expire.'
+                            });
+                      },
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year + 3),
+                    ),
+                  ]),
                   isActive: currentStep >= 0,
                   state: currentStep >= 2
                       ? StepState.complete
@@ -69,28 +115,32 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
                 ),
               ],
             ),
-            ReactiveFormConsumer(builder: ((context, formGroup, child) {
-              return ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: ((context) {
-                          return AlertDialog(
-                            title: Text('Hello'),
-                            content: Text(form.value.toString()),
-                            actions: [
-                              TextButton(
-                                child: Text('ok'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        }));
-                  },
-                  child: Text('submit'));
-            }))
+            form.valid
+                ? ReactiveFormConsumer(builder: ((context, formGroup, child) {
+                    return ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: ((context) {
+                                return AlertDialog(
+                                  title: Text('Hello'),
+                                  content: Text(form.value.toString()),
+                                  actions: [
+                                    TextButton(
+                                      child: Text('ok'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }));
+                        },
+                        child: Text('Submit'));
+                  }))
+                : TextButton(
+                    onPressed: (() => Navigator.of(context).pop()),
+                    child: Text('Cancel')),
           ],
         ),
       ),
@@ -101,12 +151,7 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
     setState(() => currentStep = step);
   }
 
-  continued(FormGroup fg) {
-    if (currentStep == 2) {
-      setState(() {
-        finalForm = fg.value.toString();
-      });
-    }
+  continued() {
     currentStep < 2 ? setState(() => currentStep += 1) : null;
   }
 
