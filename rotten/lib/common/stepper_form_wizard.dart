@@ -10,13 +10,12 @@ class StepperFormWizard extends StatefulWidget {
 }
 
 class _StepperFormWizardState extends State<StepperFormWizard> {
-  // List<String> categories = categoriesMap.keys.toList();
   int currentStep = 0;
   String finalForm = '';
   late FocusNode _focusNode;
 
   final form = FormGroup({
-    'category': FormControl(validators: [Validators.required]),
+    'category': FormControl<String>(validators: [Validators.required]),
     'name': FormControl(validators: [Validators.required]),
     'expiry': FormControl<DateTime>(validators: [Validators.required])
   });
@@ -42,7 +41,11 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
               steps: <Step>[
                 Step(
                   title: Text('Category'),
-                  content: ReactiveTextField(
+                  content: ReactiveDropdownField<String>(
+                      items: categoriesMap.keys
+                          .map((String c) =>
+                              DropdownMenuItem(value: c, child: Text(c)))
+                          .toList(),
                       decoration: InputDecoration(
                         labelText:
                             'Select which category of food you think it belongs to?',
