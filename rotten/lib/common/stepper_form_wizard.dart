@@ -155,6 +155,7 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
   }
 
   continued() {
+    setState(() {});
     currentStep < 2 ? setState(() => currentStep += 1) : null;
   }
 
