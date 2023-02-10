@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rotten/common/utils.dart';
 
@@ -40,16 +41,17 @@ class FridgeItem {
       this.scanDate,
       this.storeName,
       this.price = 0.0,
-      this.dateOfPurchase,
+      DateTime? dateNow,
       this.expiry,
-      this.lastModifiedAt,
       this.imageUrl,
       this.categoryChecked = false,
       this.selected = false})
       : icon = Icon(
           Icons.fastfood,
-          color: Colors.primaries[id.hashCode % Colors.primaries.length - 1],
-        );
+          color: Colors.primaries[id.hashCode % Colors.primaries.length],
+        ),
+        dateOfPurchase = dateNow ?? DateTime.now(),
+        lastModifiedAt = dateNow ?? DateTime.now();
 
   Map<String, Object?> toJson() {
     return {
@@ -98,41 +100,41 @@ class FridgeItem {
     return diffs;
   }
 
-  // FridgeItem.fromMap(Map<String, dynamic> map, String id)
-  //     : assert(map['name'] != null),
-  //       assert(map['expiry'] != null),
-  //       assert(map['collectionId'] != null),
-  //       assert(map['addedByUserId'] != null),
-  //       id = map['id'] ?? id,
-  //       collectionId = map['collectionId'],
-  //       addedByUserId = map['addedByUserId'],
-  //       name = map['name'],
-  //       isDeleted = map['isDeleted'] ?? false,
-  //       deletedDate = map['deleteDate'] == null
-  //           ? null
-  //           : (map['deleteDate'] as Timestamp).toDate(),
-  //       quantity = map['quantity'],
-  //       volume = map['volume'],
-  //       measurmentType = map['measurmentType'],
-  //       category = map['category'],
-  //       fromScan = map['fromScan'] ?? false,
-  //       scanDate = map['scanDate'] == null
-  //           ? null
-  //           : (map['scanDate'] as Timestamp).toDate(),
-  //       storeName = map['storeName'],
-  //       price = map['price'],
-  //       dateOfPurchase = (map['dateOfPurchase'] as Timestamp).toDate(),
-  //       categoryChecked = map['categoryChecked'] ?? false,
-  //       expiry = (map['expiry'] as Timestamp).toDate(),
-  //       imageUrl = map['imageUrl'],
-  //       lastModifiedAt = map['lastModifiedAt'] == null
-  //           ? null
-  //           : (map['lastModifiedAt'] as Timestamp).toDate(),
-  //       icon = null,
-  //       selected = false;
+  FridgeItem.fromMap(Map<String, dynamic> map, String id)
+      : assert(map['name'] != null),
+        assert(map['expiry'] != null),
+        assert(map['collectionId'] != null),
+        assert(map['addedByUserId'] != null),
+        id = map['id'] ?? id,
+        collectionId = map['collectionId'],
+        addedByUserId = map['addedByUserId'],
+        name = map['name'],
+        isDeleted = map['isDeleted'] ?? false,
+        deletedDate = map['deleteDate'] == null
+            ? null
+            : (map['deleteDate'] as Timestamp).toDate(),
+        quantity = map['quantity'],
+        volume = map['volume'],
+        measurmentType = map['measurmentType'],
+        category = map['category'],
+        fromScan = map['fromScan'] ?? false,
+        scanDate = map['scanDate'] == null
+            ? null
+            : (map['scanDate'] as Timestamp).toDate(),
+        storeName = map['storeName'],
+        price = map['price'],
+        dateOfPurchase = (map['dateOfPurchase'] as Timestamp).toDate(),
+        categoryChecked = map['categoryChecked'] ?? false,
+        expiry = (map['expiry'] as Timestamp).toDate(),
+        imageUrl = map['imageUrl'],
+        lastModifiedAt = map['lastModifiedAt'] == null
+            ? null
+            : (map['lastModifiedAt'] as Timestamp).toDate(),
+        icon = null,
+        selected = false;
 
-  // FridgeItem.fromSnapshot(DocumentSnapshot snapshot)
-  //     : this.fromMap(snapshot.data() as Map<String, dynamic>, snapshot.id);
+  FridgeItem.fromSnapshot(DocumentSnapshot snapshot)
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, snapshot.id);
 
   @override
   String toString() => '''

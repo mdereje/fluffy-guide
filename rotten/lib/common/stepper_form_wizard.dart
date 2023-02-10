@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:rotten/modules/food/constants.dart';
+import 'package:rotten/modules/food/database/fridge_collection.dart';
+import 'package:rotten/modules/food/models/fridge_item.dart';
 
 class StepperFormWizard extends StatefulWidget {
   StepperFormWizard({Key? key}) : super(key: key);
@@ -10,6 +12,8 @@ class StepperFormWizard extends StatefulWidget {
 }
 
 class _StepperFormWizardState extends State<StepperFormWizard> {
+  var fridgeOperations = FridgeCollectionOperations();
+
   int currentStep = 0;
   String finalForm = '';
   late FocusNode _focusNode;
@@ -19,6 +23,8 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
     'name': FormControl(validators: [Validators.required]),
     'expiry': FormControl<DateTime>(validators: [Validators.required])
   });
+
+  FridgeItem fridgeItem = FridgeItem('test', 'no-users', '');
 
   @override
   void initState() {
@@ -132,6 +138,15 @@ class _StepperFormWizardState extends State<StepperFormWizard> {
                                     TextButton(
                                       child: Text('ok'),
                                       onPressed: () {
+                                        fridgeItem.category =
+                                            form.value['category'] as String;
+                                        fridgeItem.name =
+                                            form.value['name'] as String;
+                                        fridgeItem.expiry =
+                                            form.value['expiry'] as DateTime;
+
+                                        fridgeOperations
+                                            .upsertFridgeItem(fridgeItem);
                                         Navigator.of(context).pop();
                                       },
                                     ),

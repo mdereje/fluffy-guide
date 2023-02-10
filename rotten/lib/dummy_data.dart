@@ -38,9 +38,7 @@ FridgeItem generateFridgeItem(int i) {
       category: finalCat,
       storeName: faker.company.companyName(),
       price: faker.datatype.float(min: 0, max: 50, precision: 2),
-      dateOfPurchase: faker.date.past(DateTime.now(), rangeInYears: 1),
       expiry: faker.date.future(DateTime.now(), rangeInYears: 2),
-      lastModifiedAt: faker.date.past(DateTime.now(), rangeInYears: 1),
       imageUrl: faker.image.unsplash.food(keyword: finalCat),
       categoryChecked: true);
 }

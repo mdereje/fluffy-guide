@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 import 'package:rotten/common/stepper_form_wizard.dart';
 
 class AddFridgeItemFormPage extends StatefulWidget {
@@ -10,15 +9,6 @@ class AddFridgeItemFormPage extends StatefulWidget {
 }
 
 class _AddFridgeItemFormPageState extends State<AddFridgeItemFormPage> {
-  FormGroup buildForm() => fb.group(<String, Object>{
-        'email': FormControl<String>(
-          validators: [Validators.required, Validators.email],
-        ),
-        'password': ['', Validators.required, Validators.minLength(8)],
-        'rememberMe': false,
-      });
-  String stuff = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
