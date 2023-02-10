@@ -6,11 +6,16 @@ import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:rotten/common/theme_mode_provider.dart';
 import 'package:rotten/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'themes/dark_mode_orange.dart';
 import 'themes/pink_blue.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -27,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     currentTheme.addListener(() {
       setState(() {});
     });
