@@ -80,14 +80,12 @@ class _FridgeModuleState extends State<FridgeModule> {
 
     for (var item in items) {
       categoriesForDisplay.map((key, value) {
-        print("key = $key foundCategory = ${item.category}");
         if (key == item.category) {
           if (value.fridgeItems.isEmpty) {
             value.fridgeItems = [item];
           } else {
             value.fridgeItems.add(item);
           }
-          print(value.name);
         }
         return MapEntry(key, value);
       });
