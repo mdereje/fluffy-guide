@@ -40,9 +40,9 @@ class FridgeCollectionOperations {
     });
   }
 
-  Stream<List<FridgeItem>> getAllFridgeItems(String uid) {
-    return itemsCollection(uid).snapshots().map(_itemListFromSnapshot);
-  }
+  // Stream<List<FridgeItem>> getAllFridgeItems(String uid) {
+  //   return itemsCollection(uid).snapshots().map(_itemListFromSnapshot);
+  // }
 
   Future<String> getNameOfList(String? fridgeId) async {
     return fridgeCollection.doc(fridgeId).get().then((ds) {
