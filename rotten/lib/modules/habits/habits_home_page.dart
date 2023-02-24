@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:rotten/modules/habits/streaks_grid_view.dart';
+import 'package:rotten/modules/habits/track_new_streak.dart';
 
-class HabitsHomePage extends StatelessWidget {
+class HabitsHomePage extends StatefulWidget {
   const HabitsHomePage({Key? key}) : super(key: key);
 
   @override
+  State<HabitsHomePage> createState() => _HabitsHomePageState();
+}
+
+class _HabitsHomePageState extends State<HabitsHomePage> {
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Track streaks'),
+        ),
+        body: StreaksGridView(),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: ((context) {
+                  return TrackNewStreak();
+                }));
+          },
+          label: Row(children: [Icon(Icons.add), Text('Track New')]),
+        ));
   }
 }
