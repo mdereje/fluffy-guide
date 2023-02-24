@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/streak.dart';
@@ -20,9 +18,7 @@ class StreakCollectionOperation {
 
   Future<void> addOrUpdateStreak(
       String userId, String? streakId, Streak newStreak) async {
-    await userStreaksCollection(userId)
-        .doc(streakId)
-        .set(jsonEncode(newStreak));
+    await userStreaksCollection(userId).doc(streakId).set(newStreak.toJson());
   }
 
   List<Streak> streaksFromSnapshot(QuerySnapshot qs) {

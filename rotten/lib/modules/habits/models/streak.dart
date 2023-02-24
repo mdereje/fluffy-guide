@@ -47,6 +47,21 @@ class Streak {
 
   Streak.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>);
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'cheatDaysAllowedBeforeStreakReset': cheatDaysAllowedBeforeStreakReset,
+        'cheatDaysRefreshPeriod': cheatDaysRefreshPeriod,
+        'isSessionized': isSessionized,
+        'createdAt': createdAt,
+        'sessions': sessions?.map((e) => e.toJson()).toList(),
+        'ticurrentStreaktle': currentStreak,
+        'currentStreakStartDate': currentStreakStartDate,
+        'maxStreak': maxStreak,
+        'maxStreakStartDate': maxStreakStartDate,
+        'maxStreakEndDate': maxStreakEndDate,
+        'milestonesReached': milestonesReached?.map((e) => e.toJson()).toList()
+      };
 }
 
 class Session {
@@ -58,6 +73,8 @@ class Session {
   Session.fromMap(Map<String, dynamic> map)
       : start = (map['start'] as Timestamp).toDate(),
         end = getDateTimeFromFirebaseMap(map, 'end');
+
+  Map<String, dynamic> toJson() => {'start': start, 'end': end};
 }
 
 class MileStone {
@@ -69,4 +86,6 @@ class MileStone {
   MileStone.fromMap(Map<String, dynamic> map)
       : title = map['title'],
         days = map['days'];
+
+  Map<String, dynamic> toJson() => {'title': title, 'days': days};
 }
