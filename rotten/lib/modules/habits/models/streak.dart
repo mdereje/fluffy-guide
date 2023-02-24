@@ -1,6 +1,8 @@
 class Streak {
   final String title;
-  final int cheatDaysAllowedBeforeStreakReset;
+  final int cheatDayssAllowedBeforeStreakReset;
+  final int cheatDaysRefreshPeriod;
+  final bool isSessionized;
   final List<Session>? sessions;
   final int? currentStreak;
   final DateTime? currentStreakStartDate;
@@ -9,7 +11,8 @@ class Streak {
   final DateTime? maxStreakEndDate;
   final List<MileStone>? milestonesReached;
 
-  Streak(this.title, this.cheatDaysAllowedBeforeStreakReset,
+  Streak(this.title, this.cheatDayssAllowedBeforeStreakReset,
+      this.cheatDaysRefreshPeriod, this.isSessionized,
       {this.sessions,
       this.currentStreak,
       this.maxStreak,

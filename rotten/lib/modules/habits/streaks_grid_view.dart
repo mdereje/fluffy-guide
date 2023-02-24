@@ -16,7 +16,7 @@ class StreaksGridView extends StatelessWidget {
         mainAxisSpacing: 10,
         crossAxisCount: 3,
         children: List<Widget>.generate(
-            10,
+            9,
             (index) => StreakDisplayCard(
                 num: (index + 1) * 100, s: faker.animal.animal())));
   }

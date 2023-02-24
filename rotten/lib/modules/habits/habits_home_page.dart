@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rotten/modules/habits/streaks_grid_view.dart';
-import 'package:rotten/modules/habits/track_new_streak.dart';
+import 'package:rotten/modules/habits/track_new_streak_form.dart';
 
 class HabitsHomePage extends StatefulWidget {
   const HabitsHomePage({Key? key}) : super(key: key);
@@ -19,10 +19,10 @@ class _HabitsHomePageState extends State<HabitsHomePage> {
         body: StreaksGridView(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            showDialog(
+            showModalBottomSheet(
                 context: context,
                 builder: ((context) {
-                  return TrackNewStreak();
+                  return TrackNewStreakForm();
                 }));
           },
           label: Row(children: [Icon(Icons.add), Text('Track New')]),
