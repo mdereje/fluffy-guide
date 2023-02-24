@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:rotten/modules/habits/database/streaks_collection.dart';
+import 'package:rotten/modules/habits/models/streak.dart';
 
 class TrackNewStreakForm extends StatefulWidget {
   TrackNewStreakForm({
@@ -11,8 +13,11 @@ class TrackNewStreakForm extends StatefulWidget {
 }
 
 class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
+  Streak newStreak = Streak('title', 0, 0, false, DateTime.now());
+  StreakCollectionOperation streakDb = StreakCollectionOperation();
+
   final form = FormGroup({
-    'name': FormControl<String>(validators: [Validators.required]),
+    'title': FormControl<String>(validators: [Validators.required]),
     'cheatDaysAllowedBeforeStreakReset':
         FormControl<int>(validators: [Validators.required, Validators.number]),
     'cheatDaysRefreshPeriod': FormControl<int>(validators: [
@@ -49,7 +54,7 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
                           'What would you like to label the streak? (ex: Exercise, Read)',
                       suffixIcon: Icon(Icons.text_fields),
                     ),
-                    formControlName: 'name',
+                    formControlName: 'title',
                     validationMessages: {
                       ValidationMessage.required: (error) =>
                           'Must have an streak name.'
@@ -99,9 +104,7 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
                           'Sessonize this streak tracking? (enable duration of activity tracking)'),
                       ReactiveCheckbox(
                         onChanged: (control) {
-                          setState(() {
-                            print(form.rawValue);
-                          });
+                          setState(() {});
                         },
                         formControlName: 'isSessionized',
                       )
@@ -114,10 +117,22 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
                               builder: ((context, formGroup, child) {
                               return ElevatedButton(
                                 onPressed: (() {
-                                  showAboutDialog(
-                                      context: context,
-                                      applicationLegalese:
-                                          formGroup.rawValue.toString());
+                                  newStreak.title =
+                                      formGroup.value['title'] as String;
+                                  newStreak.cheatDaysAllowedBeforeStreakReset =
+                                      formGroup.value[
+                                              'cheatDaysAllowedBeforeStreakReset']
+                                          as int;
+                                  newStreak.cheatDaysRefreshPeriod = formGroup
+                                      .value['cheatDaysRefreshPeriod'] as int;
+                                  newStreak.isSessionized =
+                                      formGroup.value['isSessionized'] as bool;
+                                  newStreak.currentStreak = 0;
+                                  newStreak.createdAt = DateTime.now();
+
+                                  streakDb.addOrUpdateStreak(
+                                      'test', null, newStreak);
+
                                   Navigator.of(context).pop();
                                 }),
                                 child: Text('Streakify Acitvity!'),
