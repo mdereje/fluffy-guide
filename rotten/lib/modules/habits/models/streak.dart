@@ -14,6 +14,7 @@ class Streak {
   DateTime? maxStreakStartDate;
   DateTime? maxStreakEndDate;
   List<MileStone>? milestonesReached;
+  String? imageUrl;
 
   Streak(this.title, this.cheatDaysAllowedBeforeStreakReset,
       this.cheatDaysRefreshPeriod, this.isSessionized, this.createdAt,
@@ -23,7 +24,8 @@ class Streak {
       this.currentStreakStartDate,
       this.maxStreakStartDate,
       this.maxStreakEndDate,
-      this.milestonesReached});
+      this.milestonesReached,
+      this.imageUrl});
 
   Streak.fromMap(Map<String, dynamic> map)
       : title = map['title'],
@@ -43,7 +45,8 @@ class Streak {
         maxStreakEndDate = getDateTimeFromFirebaseMap(map, 'maxStreakEndDate'),
         milestonesReached = map['milestonesReached']?.map<MileStone>((item) {
           return MileStone.fromMap(item);
-        }).toList();
+        }).toList(),
+        imageUrl = map['imageUrl'];
 
   Streak.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>);
@@ -60,7 +63,8 @@ class Streak {
         'maxStreak': maxStreak,
         'maxStreakStartDate': maxStreakStartDate,
         'maxStreakEndDate': maxStreakEndDate,
-        'milestonesReached': milestonesReached?.map((e) => e.toJson()).toList()
+        'milestonesReached': milestonesReached?.map((e) => e.toJson()).toList(),
+        'imageUrl': imageUrl
       };
 }
 

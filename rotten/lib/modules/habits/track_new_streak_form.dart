@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:rotten/dummy_data.dart';
 import 'package:rotten/modules/habits/database/streaks_collection.dart';
 import 'package:rotten/modules/habits/models/streak.dart';
 
@@ -117,8 +118,9 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
                               builder: ((context, formGroup, child) {
                               return ElevatedButton(
                                 onPressed: (() {
-                                  newStreak.title =
+                                  var title =
                                       formGroup.value['title'] as String;
+                                  newStreak.title = title;
                                   newStreak.cheatDaysAllowedBeforeStreakReset =
                                       formGroup.value[
                                               'cheatDaysAllowedBeforeStreakReset']
@@ -129,7 +131,8 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
                                       formGroup.value['isSessionized'] as bool;
                                   newStreak.currentStreak = 0;
                                   newStreak.createdAt = DateTime.now();
-
+                                  newStreak.imageUrl = faker.image.unsplash
+                                      .image(keyword: title);
                                   streakDb.addOrUpdateStreak(
                                       'test', null, newStreak);
 
