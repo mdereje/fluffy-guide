@@ -1,6 +1,7 @@
 library utils;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 String getDateFromDateTime(DateTime dateTime) {
   return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
@@ -20,4 +21,9 @@ DateTime? getDateTimeFromFirebaseMap(
   return map[propertyName] == null
       ? null
       : (map[propertyName] as Timestamp).toDate();
+}
+
+DateTime dateTimeFromTimeOfDay(TimeOfDay tod) {
+  final now = DateTime.now();
+  return DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
 }

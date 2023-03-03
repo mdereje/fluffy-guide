@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:rotten/common/utils.dart';
 import 'package:rotten/modules/habits/models/streak.dart';
 
 class SessionAlertDialog extends StatelessWidget {
@@ -9,10 +10,13 @@ class SessionAlertDialog extends StatelessWidget {
     Key? key,
     required this.s,
   }) : super(key: key);
+
   FocusNode _focusNode = FocusNode();
   final form = FormGroup({
-    'start': FormControl<DateTime>(validators: [Validators.required]),
-    'end': FormControl<DateTime>(validators: [Validators.required]),
+    'start': FormControl<TimeOfDay>(
+        validators: [Validators.required], value: TimeOfDay.now()),
+    'end': FormControl<TimeOfDay>(
+        validators: [Validators.required], value: TimeOfDay.now()),
   });
 
   @override
@@ -24,17 +28,20 @@ class SessionAlertDialog extends StatelessWidget {
         content: sessonized(),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
+            onPressed: () => Navigator.pop(context, null),
             child: const Text('Cancel'),
           ),
           ReactiveFormConsumer(builder: (context, formGroup, child) {
             return TextButton(
               onPressed: () {
-                Session session = Session(formGroup.value['start'] as DateTime,
-                    formGroup.value['end'] as DateTime);
+                final startTime = formGroup.value['start'] as TimeOfDay;
+                final endTime = formGroup.value['end'] as TimeOfDay;
+
+                Session session = Session(dateTimeFromTimeOfDay(startTime),
+                    dateTimeFromTimeOfDay(endTime));
+
                 s.sessions ??= <Session>[];
                 s.sessions!.add(session);
-
                 Navigator.pop(context, s);
               },
               child: const Text('Add'),
@@ -50,10 +57,10 @@ class SessionAlertDialog extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ReactiveDatePicker(
+        ReactiveTimePicker(
           formControlName: 'start',
-          builder: (BuildContext context,
-              ReactiveDatePickerDelegate<DateTime> picker, Widget? child) {
+          builder: (BuildContext context, ReactiveTimePickerDelegate picker,
+              Widget? child) {
             return ReactiveTextField(
                 onTap: (_) {
                   if (_focusNode.canRequestFocus) {
@@ -61,25 +68,23 @@ class SessionAlertDialog extends StatelessWidget {
                     picker.showPicker();
                   }
                 },
-                valueAccessor: DateTimeValueAccessor(),
+                valueAccessor: TimeOfDayValueAccessor(),
                 formControlName: 'start',
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'Start time',
-                  suffixIcon: Icon(Icons.calendar_today),
+                  suffixIcon: Icon(Icons.timelapse),
                 ),
                 validationMessages: {
                   ValidationMessage.required: (error) =>
-                      'Must pick a date to get notified about when it will expire.'
+                      'Must pick a start time.'
                 });
           },
-          firstDate: DateTime.now(),
-          lastDate: DateTime(DateTime.now().year + 3),
         ),
-        ReactiveDatePicker(
+        ReactiveTimePicker(
           formControlName: 'end',
-          builder: (BuildContext context,
-              ReactiveDatePickerDelegate<DateTime> picker, Widget? child) {
+          builder: (BuildContext context, ReactiveTimePickerDelegate picker,
+              Widget? child) {
             return ReactiveTextField(
                 onTap: (_) {
                   if (_focusNode.canRequestFocus) {
@@ -87,19 +92,17 @@ class SessionAlertDialog extends StatelessWidget {
                     picker.showPicker();
                   }
                 },
-                valueAccessor: DateTimeValueAccessor(),
+                valueAccessor: TimeOfDayValueAccessor(),
                 formControlName: 'end',
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'End time',
-                  suffixIcon: Icon(Icons.calendar_today),
+                  suffixIcon: Icon(Icons.timelapse),
                 ),
                 validationMessages: {
-                  ValidationMessage.required: (error) => 'Must pick end time'
+                  ValidationMessage.required: (error) => 'Must pick end time.'
                 });
           },
-          firstDate: DateTime.now(),
-          lastDate: DateTime(DateTime.now().year + 3),
         )
       ],
     );
