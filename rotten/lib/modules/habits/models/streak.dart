@@ -7,6 +7,7 @@ class Streak {
   int cheatDaysRefreshPeriod;
   bool isSessionized;
   DateTime createdAt;
+  String? id;
   List<Session>? sessions;
   int? currentStreak;
   DateTime? currentStreakStartDate;
@@ -25,9 +26,10 @@ class Streak {
       this.maxStreakStartDate,
       this.maxStreakEndDate,
       this.milestonesReached,
-      this.imageUrl});
+      this.imageUrl,
+      this.id});
 
-  Streak.fromMap(Map<String, dynamic> map)
+  Streak.fromMap(Map<String, dynamic> map, String this.id)
       : title = map['title'],
         cheatDaysRefreshPeriod = map['cheatDaysRefreshPeriod'],
         cheatDaysAllowedBeforeStreakReset =
@@ -49,7 +51,7 @@ class Streak {
         imageUrl = map['imageUrl'];
 
   Streak.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>);
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, snapshot.id);
 
   Map<String, dynamic> toJson() => {
         'title': title,

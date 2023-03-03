@@ -1,17 +1,18 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:rotten/modules/habits/examples/multi_example.dart';
+import 'package:rotten/modules/habits/add_session_alert_dialog.dart';
+import 'package:rotten/modules/habits/database/streaks_collection.dart';
 import 'package:rotten/modules/habits/models/streak.dart';
 
 class StreakDisplayCard extends StatelessWidget {
   final int num;
   final Streak s;
-  const StreakDisplayCard({
+  StreakDisplayCard({
     Key? key,
     required this.num,
     required this.s,
   }) : super(key: key);
+
+  final streakCollection = StreakCollectionOperation();
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,15 @@ class StreakDisplayCard extends StatelessWidget {
 
           Spacer(),
           ElevatedButton.icon(
-              onPressed: () {
-                print('pressed');
-              },
+              onPressed: () => showDialog<Streak>(
+                    context: context,
+                    builder: (BuildContext context) => SessionAlertDialog(
+                      s: s,
+                    ),
+                  ).then((updatedStreak) {
+                    streakCollection.addOrUpdateStreak(
+                        'test', updatedStreak?.id, updatedStreak!);
+                  }),
               icon: Icon(Icons.note_add),
               label: Text('Session'))
           // TableMultiExample()
