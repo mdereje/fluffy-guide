@@ -24,8 +24,6 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
     'cheatDaysRefreshPeriod': FormControl<int>(validators: [
       Validators.required,
       Validators.number,
-      // Compare validator not working so skipping for now.
-      // Validates that 'cheatDaysAllowedBeforeStreakReset' is lower than 'cheatDaysRefreshPeriod'
     ]),
     'isSessionized': FormControl<bool>(value: false)
   }, validators: [
