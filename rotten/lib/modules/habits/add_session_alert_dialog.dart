@@ -25,9 +25,26 @@ class _SessionAlertDialogState extends State<SessionAlertDialog> {
     'start': FormControl<TimeOfDay>(
         validators: [Validators.required], value: TimeOfDay.now()),
     'end': FormControl<TimeOfDay>(
-        validators: [Validators.required], value: TimeOfDay.now()),
+      validators: [
+        Validators.required,
+      ],
+      value: TimeOfDay.now(),
+    ),
     'quick': FormControl<String>()
-  });
+  }, validators: [
+    (AbstractControl control) {
+      final fm = control as FormGroup;
+      final startFm = fm.control('start') as FormControl<TimeOfDay>;
+      final endFm = fm.control('end') as FormControl<TimeOfDay>;
+      var start = dateTimeFromTimeOfDay(startFm.value as TimeOfDay);
+      var end = dateTimeFromTimeOfDay(endFm.value as TimeOfDay);
+
+      if (end.isBefore(start)) {
+        endFm.setErrors({'compare': true});
+      }
+      return null;
+    },
+  ]);
 
   List<Widget> quickSettings = timeSelectionRadio.values.map((item) {
     return Text(item['label'] as String);
@@ -48,21 +65,23 @@ class _SessionAlertDialogState extends State<SessionAlertDialog> {
           ReactiveFormConsumer(builder: (context, formGroup, child) {
             return TextButton(
               onPressed: () {
-                final startTime = formGroup.value['start'] as TimeOfDay;
-                var endTime =
-                    dateTimeFromTimeOfDay(formGroup.value['end'] as TimeOfDay);
+                if (formGroup.valid) {
+                  final startTime = formGroup.value['start'] as TimeOfDay;
+                  var endTime = dateTimeFromTimeOfDay(
+                      formGroup.value['end'] as TimeOfDay);
+                  if (!displayCustom) {
+                    var selection = timeSelectionRadio[selectedKey];
+                    endTime =
+                        DateTime.now().add(selection!['value'] as Duration);
+                  }
 
-                if (!displayCustom) {
-                  var selection = timeSelectionRadio[selectedKey];
-                  endTime = DateTime.now().add(selection!['value'] as Duration);
+                  Session session =
+                      Session(dateTimeFromTimeOfDay(startTime), endTime);
+
+                  widget.s.sessions ??= <Session>[];
+                  widget.s.sessions!.add(session);
+                  Navigator.pop(context, widget.s);
                 }
-
-                Session session =
-                    Session(dateTimeFromTimeOfDay(startTime), endTime);
-
-                widget.s.sessions ??= <Session>[];
-                widget.s.sessions!.add(session);
-                Navigator.pop(context, widget.s);
               },
               child: const Text('Add'),
             );
@@ -124,7 +143,9 @@ class _SessionAlertDialogState extends State<SessionAlertDialog> {
                       ),
                       validationMessages: {
                         ValidationMessage.required: (error) =>
-                            'Must pick end time.'
+                            'Must pick end time.',
+                        ValidationMessage.compare: (error) =>
+                            'Must be after start date.'
                       });
                 },
               )

@@ -48,30 +48,33 @@ class StreakDisplayCard extends StatelessWidget {
                     ),
                   ).then((updatedStreak) {
                     if (updatedStreak != null) {
-                      streakCollection
-                          .addOrUpdateStreak(
-                              'test', updatedStreak.id, updatedStreak)
-                          .whenComplete(() {
-                        Duration? duration = updatedStreak.sessions?.last.end
-                            ?.difference(
-                                updatedStreak.sessions?.last.start as DateTime);
-                        final snackBar = SnackBar(
-                          content: Text(
-                              '${duration?.inMinutes} min session added to ${updatedStreak.title}'),
-                          action: SnackBarAction(
-                            label: 'Undo',
-                            onPressed: () {
-                              // Some code to undo the change.
-                              // Delete last session
-                              Streak undoStreakSessionAdd = updatedStreak;
-                              undoStreakSessionAdd.sessions?.removeLast();
-                              streakCollection.addOrUpdateStreak('test',
-                                  updatedStreak.id, undoStreakSessionAdd);
-                            },
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      });
+                      Duration? duration = updatedStreak.sessions?.last.end
+                          ?.difference(
+                              updatedStreak.sessions?.last.start as DateTime);
+                      // Might not be necessary to check if we are validating in form.
+                      if (!duration!.isNegative) {
+                        streakCollection
+                            .addOrUpdateStreak(
+                                'test', updatedStreak.id, updatedStreak)
+                            .whenComplete(() {
+                          final snackBar = SnackBar(
+                            content: Text(
+                                '${duration.inMinutes} min session added to ${updatedStreak.title}'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                // Some code to undo the change.
+                                // Delete last session
+                                Streak undoStreakSessionAdd = updatedStreak;
+                                undoStreakSessionAdd.sessions?.removeLast();
+                                streakCollection.addOrUpdateStreak('test',
+                                    updatedStreak.id, undoStreakSessionAdd);
+                              },
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      }
                     }
                   }),
               icon: Icon(Icons.note_add),

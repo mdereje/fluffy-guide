@@ -26,11 +26,12 @@ class _TrackNewStreakFormState extends State<TrackNewStreakForm> {
       Validators.number,
       // Compare validator not working so skipping for now.
       // Validates that 'cheatDaysAllowedBeforeStreakReset' is lower than 'cheatDaysRefreshPeriod'
-      // Validators.compare('cheatDaysAllowedBeforeStreakReset',
-      //     'cheatDaysRefreshPeriod', CompareOption.lower)
     ]),
     'isSessionized': FormControl<bool>(value: false)
-  });
+  }, validators: [
+    Validators.compare('cheatDaysAllowedBeforeStreakReset',
+        'cheatDaysRefreshPeriod', CompareOption.lower)
+  ]);
 
   @override
   Widget build(BuildContext context) {
